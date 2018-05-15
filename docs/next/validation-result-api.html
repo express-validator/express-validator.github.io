@@ -1,0 +1,94 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Validation Result API · express-validator</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta property="og:title" content="Validation Result API · express-validator"/><meta property="og:type" content="website"/><meta property="og:url" content="https://express-validator.github.io/index.html"/><meta property="og:description" content="This is an unified API for dealing with errors, both in legacy and check APIs."/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/img/favicon.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><link rel="stylesheet" href="/css/main.css"/></head><body class="sideNavVisible doc separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/logo.svg" alt="express-validator"/><h2 class="headerTitleWithLogo">express-validator</h2></a><a href="/versions.html"><h3>next</h3></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/docs/next/index.html" target="_self">Docs</a></li><li class="siteNavGroupActive"><a href="/docs/next/check-api.html" target="_self">API</a></li><li class=""><a href="https://github.com/express-validator/express-validator" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>API</span></h2></div><div class="navGroups"><div class="navGroup navGroupActive"><h3>Introduction</h3><ul><li class="navListItem"><a class="navItem" href="/docs/next/index.html">Getting Started</a></li></ul></div><div class="navGroup navGroupActive"><h3>Features</h3><ul><li class="navListItem"><a class="navItem" href="/docs/next/sanitization.html">Sanitization</a></li><li class="navListItem"><a class="navItem" href="/docs/next/custom-validators-sanitizers.html">Custom validators/sanitizers</a></li><li class="navListItem"><a class="navItem" href="/docs/next/custom-error-messages.html">Custom Error Messages</a></li><li class="navListItem"><a class="navItem" href="/docs/next/wildcards.html">Wildcards</a></li><li class="navListItem"><a class="navItem" href="/docs/next/schema-validation.html">Schema Validation</a></li><li class="navListItem"><a class="navItem" href="/docs/next/whole-body-validation.html">Whole Body Validation</a></li></ul></div><div class="navGroup navGroupActive"><h3>API</h3><ul><li class="navListItem"><a class="navItem" href="/docs/next/check-api.html">check API</a></li><li class="navListItem"><a class="navItem" href="/docs/next/filter-api.html">filter API</a></li><li class="navListItem"><a class="navItem" href="/docs/next/sanitization-chain-api.html">Sanitization Chain API</a></li><li class="navListItem"><a class="navItem" href="/docs/next/validation-chain-api.html">Validation Chain API</a></li><li class="navListItem navListItemActive"><a class="navItem navItemActive" href="/docs/next/validation-result-api.html">Validation Result API</a></li><li class="navListItem"><a class="navItem" href="/docs/next/legacy-api.html">Legacy API</a></li></ul></div></div></section></div><script>
+          var toggler = document.getElementById('navToggler');
+          var nav = document.getElementById('docsNav');
+          toggler.onclick = function() {
+            nav.classList.toggle('docsSliderActive');
+          };
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/express-validator/express-validator/edit/master/docs/api-validation-result.md" target="_blank" rel="noreferrer noopener">Edit</a><h1>Validation Result API</h1></header><article><div><span><p>This is an unified API for dealing with errors, both in legacy and check APIs.</p>
+<p>Each error returned by <code>.array()</code> and <code>.mapped()</code> methods have the following format by default:</p>
+<pre><code class="hljs css js">{
+  <span class="hljs-string">"msg"</span>: <span class="hljs-string">"The error message"</span>,
+  <span class="hljs-string">"param"</span>: <span class="hljs-string">"param.name.with.index[0]"</span>,
+  <span class="hljs-string">"value"</span>: <span class="hljs-string">"param value"</span>,
+  <span class="hljs-comment">// Location of the param that generated this error.</span>
+  <span class="hljs-comment">// It's either body, query, params, cookies or headers.</span>
+  <span class="hljs-string">"location"</span>: <span class="hljs-string">"body"</span>,
+
+  <span class="hljs-comment">// nestedErrors only exist when using the oneOf function</span>
+  <span class="hljs-string">"nestedErrors"</span>: [{ ... }]
+}
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="isempty"></a><a href="#isempty" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>.isEmpty()</code></h2>
+<blockquote>
+<p><em>Returns:</em> a boolean indicating whether this result object contains no errors at all.</p>
+</blockquote>
+<h2><a class="anchor" aria-hidden="true" id="formatwithformatter"></a><a href="#formatwithformatter" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>.formatWith(formatter)</code></h2>
+<ul>
+<li><code>formatter(error)</code>: the function to use to format when returning errors.<br>
+The <code>error</code> argument is an object in the format of <code>{ location, msg, param, value, nestedErrors }</code>, as described above.</li>
+</ul>
+<blockquote>
+<p><em>Returns:</em> this validation result instance</p>
+</blockquote>
+<pre><code class="hljs css js">app.post(<span class="hljs-string">'/create-user'</span>, yourValidationChains, (req, res, next) =&gt; {
+  <span class="hljs-keyword">const</span> errorFormatter = <span class="hljs-function">(<span class="hljs-params">{ location, msg, param, value, nestedErrors }</span>) =&gt;</span> {
+    <span class="hljs-comment">// Build your resulting errors however you want! String, object, whatever - it works!</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-string">`<span class="hljs-subst">${location}</span>[<span class="hljs-subst">${param}</span>]: <span class="hljs-subst">${msg}</span>`</span>;
+  };
+  <span class="hljs-keyword">const</span> result = validationResult(req).formatWith(errorFormatter);
+  <span class="hljs-keyword">if</span> (!result.isEmpty()) {
+    <span class="hljs-comment">// Response will contain something like</span>
+    <span class="hljs-comment">// { errors: [ "body[password]: must be at least 10 chars long" ] }</span>
+    <span class="hljs-keyword">return</span> res.json({ <span class="hljs-attr">errors</span>: result.array() });
+  }
+
+  <span class="hljs-comment">// Handle your request as if no errors happened</span>
+});
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="array-options"></a><a href="#array-options" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>.array([options])</code></h2>
+<ul>
+<li><code>options</code> <em>(optional)</em>: an object of options. Defaults to <code>{ onlyFirstError: false }</code></li>
+</ul>
+<blockquote>
+<p><em>Returns:</em> an array of validation errors.</p>
+</blockquote>
+<p>Gets all validation errors contained in this result object.</p>
+<p>If the option <code>onlyFirstError</code> is set to <code>true</code>, then only the first
+error for each field will be included.</p>
+<h2><a class="anchor" aria-hidden="true" id="mapped"></a><a href="#mapped" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>.mapped()</code></h2>
+<blockquote>
+<p><em>Returns:</em> an object where the keys are the field names, and the values are the validation errors</p>
+</blockquote>
+<p>Gets the first validation error of each failed field in the form of an object.</p>
+<h2><a class="anchor" aria-hidden="true" id="throw"></a><a href="#throw" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>.throw()</code></h2>
+<p>If this result object has errors, then this method will throw an exception
+decorated with the same validation result API.</p>
+<pre><code class="hljs css js"><span class="hljs-keyword">try</span> {
+  validationResult(req).throw();
+  <span class="hljs-comment">// Oh look at ma' success! All validations passed!</span>
+} <span class="hljs-keyword">catch</span> (err) {
+  <span class="hljs-built_in">console</span>.log(err.mapped()); <span class="hljs-comment">// Oh noes!</span>
+}
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="withdefaultsoptions"></a><a href="#withdefaultsoptions" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>.withDefaults(options)</code></h2>
+<ul>
+<li><code>options</code> <em>(optional)</em>: an object of options. Defaults to <code>{ formatter: error =&gt; error }</code></li>
+</ul>
+<blockquote>
+<p><em>Returns:</em> a new <a href="/docs/next/check-api.html#validationresultreq"><code>validationResult</code></a> function is returned, using the provided options</p>
+</blockquote>
+<p>This is useful when you have a consistent set of options you would like to use for all validation results throughout your application.</p>
+<p>Below is an example which sets a default error formatter:</p>
+<pre><code class="hljs">const { validationResult } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express-validator/check'</span>);
+
+const result = validationResult.withDefaults({
+    <span class="hljs-name">formatter</span>: <span class="hljs-function"><span class="hljs-params">(<span class="hljs-built_in">error</span>)</span> =&gt;</span> {
+        <span class="hljs-keyword">return</span> {
+            <span class="hljs-name">myLocation</span>: <span class="hljs-built_in">error</span>.location,
+        };
+    }
+});
+
+<span class="hljs-built_in">module</span>.exports = result;
+</code></pre>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="validation-chain-api.html">← Validation Chain API</a><a class="docs-next button" href="legacy-api.html">Legacy API →</a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#isempty"><code>.isEmpty()</code></a></li><li><a href="#formatwithformatter"><code>.formatWith(formatter)</code></a></li><li><a href="#array-options"><code>.array([options])</code></a></li><li><a href="#mapped"><code>.mapped()</code></a></li><li><a href="#throw"><code>.throw()</code></a></li><li><a href="#withdefaultsoptions"><code>.withDefaults(options)</code></a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"><img src="/img/logo.svg" alt="express-validator" width="66" height="58"/></a><div><h5>Docs</h5><a href="/docs/index.html">Getting Started</a><a href="/docs/check-api.html">API Reference</a></div><div><h5>Community</h5><a href="http://stackoverflow.com/questions/tagged/express-validator" target="_blank" rel="noreferrer noopener">Stack Overflow</a></div><div><h5>More</h5><a href="https://github.com/express-validator/express-validator">GitHub</a><a class="github-button" href="https://github.com/express-validator/express-validator" data-icon="octicon-star" data-count-href="/express-validator/express-validator/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><section class="copyright">Copyright © 2018 express-validator</section></footer></div></body></html>
