@@ -1,0 +1,65 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Wildcards · express-validator</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="&lt;p&gt;Sometimes you will want to apply the same rules to all items of an array or all keys of some object.&lt;/p&gt;
+"/><meta name="docsearch:version" content="5.3.0"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Wildcards · express-validator"/><meta property="og:type" content="website"/><meta property="og:url" content="https://express-validator.github.io/index.html"/><meta property="og:description" content="&lt;p&gt;Sometimes you will want to apply the same rules to all items of an array or all keys of some object.&lt;/p&gt;
+"/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/img/favicon.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><link rel="stylesheet" href="/css/main.css"/></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/logo.svg" alt="express-validator"/><h2 class="headerTitleWithLogo">express-validator</h2></a><a href="/versions.html"><h3>5.3.0</h3></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/docs/5.3.0/index.html" target="_self">Docs</a></li><li class="siteNavGroupActive"><a href="/docs/5.3.0/check-api.html" target="_self">API</a></li><li class=""><a href="https://github.com/express-validator/express-validator" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>Features</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Introduction</h3><ul><li class="navListItem"><a class="navItem" href="/docs/5.3.0/index.html">Getting Started</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Features</h3><ul><li class="navListItem"><a class="navItem" href="/docs/5.3.0/sanitization.html">Sanitization</a></li><li class="navListItem"><a class="navItem" href="/docs/5.3.0/custom-validators-sanitizers.html">Custom validators/sanitizers</a></li><li class="navListItem"><a class="navItem" href="/docs/5.3.0/custom-error-messages.html">Custom Error Messages</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/docs/5.3.0/wildcards.html">Wildcards</a></li><li class="navListItem"><a class="navItem" href="/docs/5.3.0/schema-validation.html">Schema Validation</a></li><li class="navListItem"><a class="navItem" href="/docs/5.3.0/whole-body-validation.html">Whole Body Validation</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">API</h3><ul><li class="navListItem"><a class="navItem" href="/docs/5.3.0/check-api.html">check API</a></li><li class="navListItem"><a class="navItem" href="/docs/5.3.0/filter-api.html">filter API</a></li><li class="navListItem"><a class="navItem" href="/docs/5.3.0/sanitization-chain-api.html">Sanitization Chain API</a></li><li class="navListItem"><a class="navItem" href="/docs/5.3.0/validation-chain-api.html">Validation Chain API</a></li><li class="navListItem"><a class="navItem" href="/docs/5.3.0/validation-result-api.html">Validation Result API</a></li><li class="navListItem"><a class="navItem" href="/docs/5.3.0/legacy-api.html">Legacy API</a></li></ul></div></div></section></div><script>
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              const headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                if (event.target.tagName === 'A') {
+                  document.body.classList.remove('tocActive');
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/express-validator/express-validator/edit/master/docs/feature-wildcards.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 class="postHeaderTitle">Wildcards</h1></header><article><div><span><p>Sometimes you will want to apply the same rules to all items of an array or all keys of some object.<br>
+That's what the <code>*</code> character - also known as a wildcard -- is for.</p>
+<p>For example, imagine you want to validate that all addresses have a valid postal code,
+and that the number of each address is sanitized as an integer number.</p>
+<p>We can do this with the following code:</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express'</span>);
+<span class="hljs-keyword">const</span> { check } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express-validator/check'</span>);
+<span class="hljs-keyword">const</span> { sanitize } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express-validator/filter'</span>);
+
+<span class="hljs-keyword">const</span> app = express();
+app.use(express.json());
+
+app.post(<span class="hljs-string">'/addresses'</span>, [
+  check(<span class="hljs-string">'addresses.*.postalCode'</span>).isPostalCode(),
+  sanitize(<span class="hljs-string">'addresses.*.number'</span>).toInt()
+], (req, res) =&gt; {
+  <span class="hljs-comment">// Handle the request</span>
+});
+</code></pre>
+<p>This will handle cases where you send an array of addresses:</p>
+<pre><code class="hljs css language-json">{
+  <span class="hljs-attr">"addresses"</span>: [
+    { <span class="hljs-attr">"postalCode"</span>: <span class="hljs-string">"2010"</span>, <span class="hljs-attr">"number"</span>: <span class="hljs-string">"500"</span> },
+    { <span class="hljs-attr">"postalCode"</span>: <span class="hljs-string">""</span>, <span class="hljs-attr">"number"</span>: <span class="hljs-string">"501"</span> },
+  ]
+}
+</code></pre>
+<p>...or even cases where you want a predefined set of addresses:</p>
+<pre><code class="hljs css language-json">{
+  <span class="hljs-attr">"addresses"</span>: {
+    <span class="hljs-attr">"home"</span>: { <span class="hljs-attr">"postalCode"</span>: <span class="hljs-string">""</span>, <span class="hljs-attr">"number"</span>: <span class="hljs-string">"501"</span> },
+    <span class="hljs-attr">"work"</span>: { <span class="hljs-attr">"postalCode"</span>: <span class="hljs-string">"2010"</span>, <span class="hljs-attr">"number"</span>: <span class="hljs-string">"500"</span> }
+  }
+}
+</code></pre>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/5.3.0/custom-error-messages.html"><span class="arrow-prev">← </span><span>Custom Error Messages</span></a><a class="docs-next button" href="/docs/5.3.0/schema-validation.html"><span>Schema Validation</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"><img src="/img/logo.svg" alt="express-validator" width="66" height="58"/></a><div><h5>Docs</h5><a href="/docs/index.html">Getting Started</a><a href="/docs/check-api.html">API Reference</a></div><div><h5>Community</h5><a href="http://stackoverflow.com/questions/tagged/express-validator" target="_blank" rel="noreferrer noopener">Stack Overflow</a></div><div><h5>More</h5><a href="https://github.com/express-validator/express-validator">GitHub</a><a class="github-button" href="https://github.com/express-validator/express-validator" data-icon="octicon-star" data-count-href="/express-validator/express-validator/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><section class="copyright">Copyright © 2018 express-validator</section></footer></div></body></html>
