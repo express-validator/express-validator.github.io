@@ -56,6 +56,9 @@ app.post(<span class="hljs-string">'/user'</span>, body(<span class="hljs-string
   <span class="hljs-keyword">if</span> (value !== req.body.password) {
     <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Password confirmation does not match password'</span>);
   }
+  
+  <span class="hljs-comment">// Indicates the success of this synchronous custom validator</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
 }), (req, res) =&gt; {
   <span class="hljs-comment">// Handle the request</span>
 });
