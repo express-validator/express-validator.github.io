@@ -89,7 +89,7 @@ app.post(<span class="hljs-string">'/api/create-user'</span>, validate([
 <pre><code class="hljs css language-js">app.post(<span class="hljs-string">'/update-settings'</span>, [
   body(<span class="hljs-string">'email'</span>).isEmail(),
   body(<span class="hljs-string">'password'</span>).optional().isLength({ <span class="hljs-attr">min</span>: <span class="hljs-number">6</span> })
-], (req, res, next) =&gt; {
+], <span class="hljs-keyword">async</span> (req, res, next) =&gt; {
   <span class="hljs-comment">// if a password has been provided, then a confirmation must also be provided.</span>
   <span class="hljs-keyword">if</span> (req.body.password) {
     <span class="hljs-keyword">await</span> body(<span class="hljs-string">'passwordConfirmation'</span>)
