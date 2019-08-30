@@ -97,6 +97,7 @@ know it will fail.</p>
     .bail()
     <span class="hljs-comment">// If username is not an email, checkBlacklistedDomain will never run</span>
     .custom(checkBlacklistedDomain)
+    .bail()
     <span class="hljs-comment">// If username is not an email or has a blacklisted domain, checkEmailExists will never run</span>
     .custom(checkEmailExists);
 ]);
