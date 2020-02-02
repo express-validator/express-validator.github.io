@@ -54,7 +54,7 @@
                 };
               }
             });
-        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/express-validator/express-validator/edit/master/docs/feature-schema-validation.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 class="postHeaderTitle">Schema Validation</h1></header><article><div><span><p>Schemas are a special, object-based way of defining validations or sanitizations on requests.<br>
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/express-validator/express-validator/edit/master/docs/feature-schema-validation.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 id="__docusaurus" class="postHeaderTitle">Schema Validation</h1></header><article><div><span><p>Schemas are a special, object-based way of defining validations or sanitizations on requests.<br>
 At the root-level, you specify the field paths as the keys, and an object as values -- which define
 the error messages, locations and validations/sanitizations.</p>
 <p>Its syntaxs looks like this:</p>
@@ -63,21 +63,21 @@ app.put(<span class="hljs-string">'/user/:id/password'</span>, checkSchema({
   <span class="hljs-attr">id</span>: {
     <span class="hljs-comment">// The location of the field, can be one or more of body, cookies, headers, params or query.</span>
     <span class="hljs-comment">// If omitted, all request locations will be checked</span>
-    <span class="hljs-keyword">in</span>: [<span class="hljs-string">'params'</span>, <span class="hljs-string">'query'</span>],
+    <span class="hljs-attr">in</span>: [<span class="hljs-string">'params'</span>, <span class="hljs-string">'query'</span>],
     <span class="hljs-attr">errorMessage</span>: <span class="hljs-string">'ID is wrong'</span>,
     <span class="hljs-attr">isInt</span>: <span class="hljs-literal">true</span>,
     <span class="hljs-comment">// Sanitizers can go here as well</span>
-    toInt: <span class="hljs-literal">true</span>
+    <span class="hljs-attr">toInt</span>: <span class="hljs-literal">true</span>
   },
   <span class="hljs-attr">myCustomField</span>: {
     <span class="hljs-comment">// Custom validators</span>
-    custom: {
+    <span class="hljs-attr">custom</span>: {
       <span class="hljs-attr">options</span>: <span class="hljs-function">(<span class="hljs-params">value, { req, location, path }</span>) =&gt;</span> {
         <span class="hljs-keyword">return</span> value + req.body.foo + location + path;
       }
     },
     <span class="hljs-comment">// and sanitizers</span>
-    customSanitizer: {
+    <span class="hljs-attr">customSanitizer</span>: {
       <span class="hljs-attr">options</span>: <span class="hljs-function">(<span class="hljs-params">value, { req, location, path }</span>) =&gt;</span> {
         <span class="hljs-keyword">let</span> sanitizedValue;
 
@@ -95,27 +95,27 @@ app.put(<span class="hljs-string">'/user/:id/password'</span>, checkSchema({
     <span class="hljs-attr">isLength</span>: {
       <span class="hljs-attr">errorMessage</span>: <span class="hljs-string">'Password should be at least 7 chars long'</span>,
       <span class="hljs-comment">// Multiple options would be expressed as an array</span>
-      options: { <span class="hljs-attr">min</span>: <span class="hljs-number">7</span> }
+      <span class="hljs-attr">options</span>: { <span class="hljs-attr">min</span>: <span class="hljs-number">7</span> }
     }
   },
   <span class="hljs-attr">firstName</span>: {
     <span class="hljs-attr">isUppercase</span>: {
       <span class="hljs-comment">// To negate a validator</span>
-      negated: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">negated</span>: <span class="hljs-literal">true</span>,
     },
     <span class="hljs-attr">rtrim</span>: {
       <span class="hljs-comment">// Options as an array</span>
-      options: [[<span class="hljs-string">" "</span>, <span class="hljs-string">"-"</span>]],
+      <span class="hljs-attr">options</span>: [[<span class="hljs-string">" "</span>, <span class="hljs-string">"-"</span>]],
     },
   },
   <span class="hljs-comment">// Wildcards/dots for nested fields work as well</span>
   <span class="hljs-string">'addresses.*.postalCode'</span>: {
     <span class="hljs-comment">// Make this field optional when undefined or null</span>
-    optional: { <span class="hljs-attr">options</span>: { <span class="hljs-attr">nullable</span>: <span class="hljs-literal">true</span> } },
+    <span class="hljs-attr">optional</span>: { <span class="hljs-attr">options</span>: { <span class="hljs-attr">nullable</span>: <span class="hljs-literal">true</span> } },
     <span class="hljs-attr">isPostalCode</span>: <span class="hljs-literal">true</span>
   }
 }), (req, res, next) =&gt; {
   <span class="hljs-comment">// handle the request as usual</span>
 })
 </code></pre>
-</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/6.0.1/wildcards.html"><span class="arrow-prev">← </span><span>Wildcards</span></a><a class="docs-next button" href="/docs/6.0.1/whole-body-validation.html"><span>Whole Body Validation</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"><img src="/img/logo.svg" alt="express-validator" width="66" height="58"/></a><div><h5>Docs</h5><a href="/docs/index.html">Getting Started</a><a href="/docs/check-api.html">API Reference</a></div><div><h5>Community</h5><a href="http://stackoverflow.com/questions/tagged/express-validator" target="_blank" rel="noreferrer noopener">Stack Overflow</a></div><div><h5>More</h5><a href="https://github.com/express-validator/express-validator">GitHub</a><a class="github-button" href="https://github.com/express-validator/express-validator" data-icon="octicon-star" data-count-href="/express-validator/express-validator/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><section class="copyright">Copyright © 2019 express-validator</section></footer></div></body></html>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/6.0.1/wildcards.html"><span class="arrow-prev">← </span><span>Wildcards</span></a><a class="docs-next button" href="/docs/6.0.1/whole-body-validation.html"><span>Whole Body Validation</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"><img src="/img/logo.svg" alt="express-validator" width="66" height="58"/></a><div><h5>Docs</h5><a href="/docs/index.html">Getting Started</a><a href="/docs/check-api.html">API Reference</a></div><div><h5>Community</h5><a href="http://stackoverflow.com/questions/tagged/express-validator" target="_blank" rel="noreferrer noopener">Stack Overflow</a></div><div><h5>More</h5><a href="https://github.com/express-validator/express-validator">GitHub</a><a class="github-button" href="https://github.com/express-validator/express-validator" data-icon="octicon-star" data-count-href="/express-validator/express-validator/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><section class="copyright">Copyright © 2020 express-validator</section></footer></div></body></html>
