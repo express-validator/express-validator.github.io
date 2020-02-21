@@ -60,7 +60,6 @@ the data is in the right format, but also that <strong>it is free of noise</stro
 that can be used to take care of the data that comes in.</p>
 <pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express'</span>);
 <span class="hljs-keyword">const</span> { body } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express-validator'</span>);
-<span class="hljs-keyword">const</span> { sanitizeBody } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express-validator'</span>);
 
 <span class="hljs-keyword">const</span> app = express();
 app.use(express.json());
@@ -73,16 +72,16 @@ app.post(<span class="hljs-string">'/comment'</span>, [
     .not().isEmpty()
     .trim()
     .escape(),
-  sanitizeBody(<span class="hljs-string">'notifyOnReply'</span>).toBoolean()
+  body(<span class="hljs-string">'notifyOnReply'</span>).toBoolean()
 ], (req, res) =&gt; {
   <span class="hljs-comment">// Handle the request somehow</span>
 });
 </code></pre>
 <p>In the example above, we are validating <code>email</code> and <code>text</code> fields,
 so we may take advantage of the same chain to apply some sanitization,
-like e-mail normalization and trimming/HTML escaping.<br>
-And because the <code>notifyOnReply</code> field isn't validated, we may use <code>sanitizeBody</code> function
-from the <a href="/docs/next/filter-api.html">sanitization middlewares</a> to convert it to a JavaScript boolean.</p>
+like e-mail normalization (<code>normalizeEmail</code>) and trimming (<code>trim</code>)/HTML escaping (<code>escape</code>).<br>
+The <code>notifyOnReply</code> field isn't validated, but it can still make use of the same <code>check</code> function
+to convert it to a JavaScript boolean.</p>
 <blockquote>
 <p><strong>Important:</strong> please note that sanitization mutates the request.
 This means that if <code>req.body.text</code> was sent with the value <code>Hello world :&gt;)</code>, after the sanitization

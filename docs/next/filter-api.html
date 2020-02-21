@@ -56,8 +56,8 @@
             });
         </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/express-validator/express-validator/edit/master/docs/api-filter.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 id="__docusaurus" class="postHeaderTitle">Sanitization middlewares</h1></header><article><div><span><p>These methods are all available via <code>require('express-validator')</code>.</p>
 <blockquote>
-<p>These sanitization-only middlewares have been deprecated, as the <a href="/docs/next/check-api.html">validation ones</a>
-offer the same functionality, and much more.
+<p>These sanitization-only middlewares have been deprecated, as <strong>the <a href="/docs/next/check-api.html">validation middlewares</a>
+offer the same functionality</strong>, and much more.
 They will be removed eventually.</p>
 </blockquote>
 <h2><a class="anchor" aria-hidden="true" id="sanitizefields"></a><a href="#sanitizefields" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>sanitize(fields)</code></h2>
@@ -66,6 +66,9 @@ They will be removed eventually.</p>
 </ul>
 <blockquote>
 <p><em>Returns:</em> a <a href="/docs/next/sanitization-chain-api.html">Sanitization Chain</a></p>
+</blockquote>
+<blockquote>
+<p><a href="/docs/next/check-api.html#checkfields-message">Prefer using <code>check()</code> instead</a>. This function has been deprecated.</p>
 </blockquote>
 <p>Creates a sanitization chain for one or more fields. They may be located in any of the following request objects:</p>
 <ul>
@@ -78,12 +81,24 @@ They will be removed eventually.</p>
 <p>If any of the fields are present in more than one location, then all instances of that field value will be sanitized.</p>
 <h2><a class="anchor" aria-hidden="true" id="sanitizebodyfields"></a><a href="#sanitizebodyfields" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>sanitizeBody(fields)</code></h2>
 <p>Same as <code>sanitize(fields)</code>, but only sanitizing <code>req.body</code>.</p>
+<blockquote>
+<p><a href="/docs/next/check-api.html#bodyfields-message">Prefer using <code>body()</code> instead</a>. This function has been deprecated.</p>
+</blockquote>
 <h2><a class="anchor" aria-hidden="true" id="sanitizecookiefields"></a><a href="#sanitizecookiefields" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>sanitizeCookie(fields)</code></h2>
 <p>Same as <code>sanitize(fields)</code>, but only sanitizing <code>req.cookies</code>.</p>
+<blockquote>
+<p><a href="/docs/next/check-api.html#cookiefields-message">Prefer using <code>cookie()</code> instead</a>. This function has been deprecated.</p>
+</blockquote>
 <h2><a class="anchor" aria-hidden="true" id="sanitizeparamfields"></a><a href="#sanitizeparamfields" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>sanitizeParam(fields)</code></h2>
 <p>Same as <code>sanitize(fields)</code>, but only sanitizing <code>req.params</code>.</p>
+<blockquote>
+<p><a href="/docs/next/check-api.html#paramfields-message">Prefer using <code>param()</code> instead</a>. This function has been deprecated.</p>
+</blockquote>
 <h2><a class="anchor" aria-hidden="true" id="sanitizequeryfields"></a><a href="#sanitizequeryfields" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>sanitizeQuery(fields)</code></h2>
 <p>Same as <code>sanitize(fields)</code>, but only sanitizing <code>req.query</code>.</p>
+<blockquote>
+<p><a href="/docs/next/check-api.html#queryfields-message">Prefer using <code>query()</code> instead</a>. This function has been deprecated.</p>
+</blockquote>
 <h2><a class="anchor" aria-hidden="true" id="buildsanitizefunctionlocations"></a><a href="#buildsanitizefunctionlocations" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>buildSanitizeFunction(locations)</code></h2>
 <ul>
 <li><code>locations</code>: an array of request locations to gather data from.<br>
@@ -91,6 +106,9 @@ May include any of <code>body</code>, <code>cookies</code>, <code>params</code> 
 </ul>
 <blockquote>
 <p><em>Returns:</em> a variant of <a href="#sanitizefields"><code>sanitize()</code></a> sanitizing the given request locations.</p>
+</blockquote>
+<blockquote>
+<p><a href="/docs/next/check-api.html#buildcheckfunctionlocations">Prefer using <code>buildCheckFunction()</code> instead</a>. This function has been deprecated.</p>
 </blockquote>
 <p>Creates a variant of <a href="#sanitizefields"><code>sanitize()</code></a> that sanitizes the given request locations.</p>
 <pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> { buildSanitizeFunction } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express-validator'</span>);

@@ -57,7 +57,8 @@
         </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/express-validator/express-validator/edit/master/docs/api-sanitization-chain.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 id="__docusaurus" class="postHeaderTitle">Sanitization Chain API</h1></header><article><div><span><p>The sanitization chain is a middleware, and it <em>should</em> be passed to an Express route handler.</p>
 <p>You can add as many sanitizers to a chain as you need.
 When the middleware runs, it will modify each field in place, applying each of the sanitizers in the order they were specified:</p>
-<pre><code class="hljs css language-js">app.get(<span class="hljs-string">'/'</span>, sanitizeBody(<span class="hljs-string">'trimMe'</span>).trim(), (req, res, next) =&gt; {
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> { body } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express-validator'</span>);
+app.get(<span class="hljs-string">'/'</span>, body(<span class="hljs-string">'trimMe'</span>).trim(), (req, res, next) =&gt; {
   <span class="hljs-comment">// If req.body.trimMe was originally "  something ",</span>
   <span class="hljs-comment">// its sanitized value will be "something"</span>
   <span class="hljs-built_in">console</span>.log(req.body.trimMe);
@@ -83,7 +84,8 @@ Receives the value of the field being sanitized, as well as the express request,
 </blockquote>
 <p>Adds a custom sanitizer to the current sanitization chain. It must synchronously return the new value.</p>
 <p>Example:</p>
-<pre><code class="hljs css language-js">app.get(<span class="hljs-string">'/object/:id'</span>, sanitizeParam(<span class="hljs-string">'id'</span>).customSanitizer(<span class="hljs-function">(<span class="hljs-params">value, { req }</span>) =&gt;</span> {
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> { param } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express-validator'</span>);
+app.get(<span class="hljs-string">'/object/:id'</span>, param(<span class="hljs-string">'id'</span>).customSanitizer(<span class="hljs-function">(<span class="hljs-params">value, { req }</span>) =&gt;</span> {
   <span class="hljs-keyword">return</span> req.query.type === <span class="hljs-string">'user'</span> ? ObjectId(value) : <span class="hljs-built_in">Number</span>(value);
 }), objectHandler)
 </code></pre>
@@ -92,10 +94,11 @@ Receives the value of the field being sanitized, as well as the express request,
 <p><em>Returns:</em> a promise that resolves when the sanitization chain ran.</p>
 </blockquote>
 <p>Runs the current sanitization chain in an imperative way.</p>
-<pre><code class="hljs css language-js">app.post(<span class="hljs-string">'/create-post'</span>, <span class="hljs-keyword">async</span> (req, res, next) =&gt; {
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> { check } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express-validator'</span>);
+app.post(<span class="hljs-string">'/create-post'</span>, <span class="hljs-keyword">async</span> (req, res, next) =&gt; {
   <span class="hljs-comment">// BEFORE:</span>
   <span class="hljs-comment">// req.body.content = ' hey your forum is amazing! &lt;script&gt;runEvilFunction();&lt;/script&gt;    ';</span>
-  <span class="hljs-keyword">await</span> sanitize(<span class="hljs-string">'content'</span>).escape().trim().run(req);
+  <span class="hljs-keyword">await</span> check(<span class="hljs-string">'content'</span>).escape().trim().run(req);
 
   <span class="hljs-comment">// AFTER:</span>
   <span class="hljs-comment">// req.body.content = 'hey your forum is amazing! &amp;lt;script&amp;gt;runEvilFunction();&amp;lt;/script&amp;gt;';</span>
