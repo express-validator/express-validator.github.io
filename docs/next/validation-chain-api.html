@@ -212,9 +212,16 @@ This is useful to remove values that are not essential to your business and that
 <li><code>nullable</code>: if <code>true</code>, fields with <code>null</code> values will be considered optional</li>
 <li><code>checkFalsy</code>: if <code>true</code>, fields with falsy values (eg <code>&quot;&quot;</code>, <code>0</code>, <code>false</code>, <code>null</code>) will also be considered optional</li>
 </ul>
-<h3><a class="anchor" aria-hidden="true" id="runreq"></a><a href="#runreq" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>.run(req)</code></h3>
+<h3><a class="anchor" aria-hidden="true" id="runreq-options"></a><a href="#runreq-options" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>.run(req[, options])</code></h3>
+<ul>
+<li><code>req</code>: the current express request to validate.</li>
+<li><code>options</code> <em>(optional)</em>: an object of options to customize how the chain will be run:
+<ul>
+<li><code>dryRun</code>: defines whether errors and sanitizations won't be persisted to <code>req</code>. Defaults to <code>false</code>.</li>
+</ul></li>
+</ul>
 <blockquote>
-<p><em>Returns:</em> a promise that resolves when the validation chain ran.</p>
+<p><em>Returns:</em> a promise for a <a href="/docs/next/validation-result-api.html#result"><code>Result</code></a> that resolves when the validation chain ran.</p>
 </blockquote>
 <p>Runs the current validation chain in an imperative way.</p>
 <pre><code class="hljs css language-js">app.post(<span class="hljs-string">'/create-user'</span>, <span class="hljs-keyword">async</span> (req, res, next) =&gt; {
@@ -229,6 +236,29 @@ This is useful to remove values that are not essential to your business and that
   <span class="hljs-comment">// user can be created now!</span>
 });
 </code></pre>
+<p>You may also pass <code>dryRun</code> option so that you can know if the request has any problems, without them
+being accounted among other request errors.</p>
+<pre><code class="hljs css language-js">app.post(<span class="hljs-string">'/api/*'</span>, <span class="hljs-keyword">async</span> (req, res, next) =&gt; {
+  <span class="hljs-keyword">const</span> tokenResult = <span class="hljs-keyword">await</span> check(<span class="hljs-string">'token'</span>).notEmpty().custom(checkMyTokenFormat).run(req, { <span class="hljs-attr">dryRun</span>: <span class="hljs-literal">true</span> });
+  <span class="hljs-keyword">if</span> (tokenResult.isEmpty()) {
+    <span class="hljs-comment">// The token looks good, so try to authenticate it</span>
+    <span class="hljs-keyword">await</span> req.authenticate();
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-comment">// The token is not good, so proceed as an unauthenticated request.</span>
+  }
+});
+
+app.post(<span class="hljs-string">'/api/create-todo'</span>, <span class="hljs-keyword">async</span> (req, res, next) =&gt; {
+  <span class="hljs-keyword">await</span> check(<span class="hljs-string">'text'</span>).notEmpty().run(req);
+  <span class="hljs-keyword">await</span> check(<span class="hljs-string">'done'</span>).isBoolean().run(req);
+  
+  <span class="hljs-keyword">const</span> result = validationResult(req);
+  <span class="hljs-keyword">if</span> (!result.isEmpty()) {
+    <span class="hljs-comment">// text and/or done have errors.</span>
+    <span class="hljs-comment">// Errors in the token as validated in the previous route are not accounted here.</span>
+  }
+});
+</code></pre>
 <h3><a class="anchor" aria-hidden="true" id="withmessagemessage"></a><a href="#withmessagemessage" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>.withMessage(message)</code></h3>
 <ul>
 <li><code>message</code>: the error message to use for the previous validator</li>
@@ -239,4 +269,4 @@ This is useful to remove values that are not essential to your business and that
 <p>Sets the error message for the previous validator.<br>
 This will have precedence over errors thrown by a custom validator.</p>
 <p>To build dynamic messages, see also <a href="/docs/next/custom-error-messages.html#dynamic-messages">Dynamic Messages</a>.</p>
-</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/next/check-api.html"><span class="arrow-prev">← </span><span>Validation middlewares</span></a><a class="docs-next button" href="/docs/next/filter-api.html"><span>Sanitization middlewares</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#standard-validators">Standard validators</a></li><li><a href="#sanitization-chain-api">Sanitization Chain API</a></li><li><a href="#additional-methods">Additional methods</a><ul class="toc-headings"><li><a href="#bail"><code>.bail()</code></a></li><li><a href="#customvalidator"><code>.custom(validator)</code></a></li><li><a href="#existsoptions"><code>.exists(options)</code></a></li><li><a href="#ifcondition"><code>.if(condition)</code></a></li><li><a href="#isarrayoptions"><code>.isArray(options)</code></a></li><li><a href="#isstring"><code>.isString()</code></a></li><li><a href="#not"><code>.not()</code></a></li><li><a href="#notempty"><code>.notEmpty()</code></a></li><li><a href="#optionaloptions"><code>.optional(options)</code></a></li><li><a href="#runreq"><code>.run(req)</code></a></li><li><a href="#withmessagemessage"><code>.withMessage(message)</code></a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"><img src="/img/logo.svg" alt="express-validator" width="66" height="58"/></a><div><h5>Docs</h5><a href="/docs/index.html">Getting Started</a><a href="/docs/check-api.html">API Reference</a></div><div><h5>Community</h5><a href="http://stackoverflow.com/questions/tagged/express-validator" target="_blank" rel="noreferrer noopener">Stack Overflow</a></div><div><h5>More</h5><a href="https://github.com/express-validator/express-validator">GitHub</a><a class="github-button" href="https://github.com/express-validator/express-validator" data-icon="octicon-star" data-count-href="/express-validator/express-validator/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><section class="copyright">Copyright © 2020 express-validator</section></footer></div></body></html>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/next/check-api.html"><span class="arrow-prev">← </span><span>Validation middlewares</span></a><a class="docs-next button" href="/docs/next/filter-api.html"><span>Sanitization middlewares</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#standard-validators">Standard validators</a></li><li><a href="#sanitization-chain-api">Sanitization Chain API</a></li><li><a href="#additional-methods">Additional methods</a><ul class="toc-headings"><li><a href="#bail"><code>.bail()</code></a></li><li><a href="#customvalidator"><code>.custom(validator)</code></a></li><li><a href="#existsoptions"><code>.exists(options)</code></a></li><li><a href="#ifcondition"><code>.if(condition)</code></a></li><li><a href="#isarrayoptions"><code>.isArray(options)</code></a></li><li><a href="#isstring"><code>.isString()</code></a></li><li><a href="#not"><code>.not()</code></a></li><li><a href="#notempty"><code>.notEmpty()</code></a></li><li><a href="#optionaloptions"><code>.optional(options)</code></a></li><li><a href="#runreq-options"><code>.run(req[, options])</code></a></li><li><a href="#withmessagemessage"><code>.withMessage(message)</code></a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"><img src="/img/logo.svg" alt="express-validator" width="66" height="58"/></a><div><h5>Docs</h5><a href="/docs/index.html">Getting Started</a><a href="/docs/check-api.html">API Reference</a></div><div><h5>Community</h5><a href="http://stackoverflow.com/questions/tagged/express-validator" target="_blank" rel="noreferrer noopener">Stack Overflow</a></div><div><h5>More</h5><a href="https://github.com/express-validator/express-validator">GitHub</a><a class="github-button" href="https://github.com/express-validator/express-validator" data-icon="octicon-star" data-count-href="/express-validator/express-validator/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><section class="copyright">Copyright © 2020 express-validator</section></footer></div></body></html>

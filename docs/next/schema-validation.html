@@ -55,9 +55,9 @@
               }
             });
         </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/express-validator/express-validator/edit/master/docs/feature-schema-validation.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 id="__docusaurus" class="postHeaderTitle">Schema Validation</h1></header><article><div><span><p>Schemas are a special, object-based way of defining validations or sanitizations on requests.<br>
-At the root-level, you specify the field paths as the keys, and an object as values -- which define
+At the root-level, you specify field paths as keys, and objects as values -- which define
 the error messages, locations and validations/sanitizations.</p>
-<p>Its syntaxs looks like this:</p>
+<p>Its syntax looks like this:</p>
 <pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> { checkSchema } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express-validator'</span>);
 app.put(<span class="hljs-string">'/user/:id/password'</span>, checkSchema({
   <span class="hljs-attr">id</span>: {
