@@ -71,7 +71,7 @@ This is possible with the use of the declarative method <code>run(req)</code>, a
       <span class="hljs-keyword">return</span> next();
     }
 
-    res.status(<span class="hljs-number">422</span>).json({ <span class="hljs-attr">errors</span>: errors.array() });
+    res.status(<span class="hljs-number">400</span>).json({ <span class="hljs-attr">errors</span>: errors.array() });
   };
 };
 

@@ -118,7 +118,7 @@ app.post(<span class="hljs-string">'/start-freelancing'</span>, oneOf([
     res.json(...);
   } <span class="hljs-keyword">catch</span> (err) {
     <span class="hljs-comment">// Oh noes. This user doesn't have enough skills for this...</span>
-    res.status(<span class="hljs-number">422</span>).json(...);
+    res.status(<span class="hljs-number">400</span>).json(...);
   }
 });
 </code></pre>

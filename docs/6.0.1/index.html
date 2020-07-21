@@ -90,7 +90,7 @@ app.post(<span class="hljs-string">'/user'</span>, [
   <span class="hljs-comment">// Finds the validation errors in this request and wraps them in an object with handy functions</span>
   <span class="hljs-keyword">const</span> errors = validationResult(req);
   <span class="hljs-keyword">if</span> (!errors.isEmpty()) {
-    <span class="hljs-keyword">return</span> res.status(<span class="hljs-number">422</span>).json({ <span class="hljs-attr">errors</span>: errors.array() });
+    <span class="hljs-keyword">return</span> res.status(<span class="hljs-number">400</span>).json({ <span class="hljs-attr">errors</span>: errors.array() });
   }
 
   User.create({

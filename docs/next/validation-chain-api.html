@@ -230,7 +230,7 @@ This is useful to remove values that are not essential to your business and that
 
   <span class="hljs-keyword">const</span> result = validationResult(req);
   <span class="hljs-keyword">if</span> (!result.isEmpty()) {
-    <span class="hljs-keyword">return</span> res.status(<span class="hljs-number">422</span>).json({ <span class="hljs-attr">errors</span>: result.array() });
+    <span class="hljs-keyword">return</span> res.status(<span class="hljs-number">400</span>).json({ <span class="hljs-attr">errors</span>: result.array() });
   }
 
   <span class="hljs-comment">// user can be created now!</span>
