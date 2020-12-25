@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Getting Started · express-validator</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="express-validator is a set of [express.js](http://expressjs.com/) middlewares that wraps"/><meta name="docsearch:version" content="6.7.0"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Getting Started · express-validator"/><meta property="og:type" content="website"/><meta property="og:url" content="https://express-validator.github.io/index.html"/><meta property="og:description" content="express-validator is a set of [express.js](http://expressjs.com/) middlewares that wraps"/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/img/favicon.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/logo.svg" alt="express-validator"/><h2 class="headerTitleWithLogo">express-validator</h2></a><a href="/versions.html"><h3>6.7.0</h3></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive siteNavItemActive"><a href="/docs/index.html" target="_self">Docs</a></li><li class="siteNavGroupActive"><a href="/docs/check-api.html" target="_self">API</a></li><li class=""><a href="https://github.com/express-validator/express-validator" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Introduction</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Introduction</h3><ul class=""><li class="navListItem navListItemActive"><a class="navItem" href="/docs/index.html">Getting Started</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Features</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/sanitization.html">Sanitization</a></li><li class="navListItem"><a class="navItem" href="/docs/custom-validators-sanitizers.html">Custom validators/sanitizers</a></li><li class="navListItem"><a class="navItem" href="/docs/custom-error-messages.html">Custom Error Messages</a></li><li class="navListItem"><a class="navItem" href="/docs/wildcards.html">Wildcards</a></li><li class="navListItem"><a class="navItem" href="/docs/schema-validation.html">Schema Validation</a></li><li class="navListItem"><a class="navItem" href="/docs/whole-body-validation.html">Whole Body Validation</a></li><li class="navListItem"><a class="navItem" href="/docs/running-imperatively.html">Running validations imperatively</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">API</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/check-api.html">Validation middlewares</a></li><li class="navListItem"><a class="navItem" href="/docs/validation-chain-api.html">Validation Chain API</a></li><li class="navListItem"><a class="navItem" href="/docs/filter-api.html">Sanitization middlewares</a></li><li class="navListItem"><a class="navItem" href="/docs/sanitization-chain-api.html">Sanitization Chain API</a></li><li class="navListItem"><a class="navItem" href="/docs/matched-data-api.html">matchedData()</a></li><li class="navListItem"><a class="navItem" href="/docs/validation-result-api.html">validationResult()</a></li></ul></div></div></section></div><script>
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Getting Started · express-validator</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="express-validator is a set of [express.js](http://expressjs.com/) middlewares that wraps"/><meta name="docsearch:version" content="6.9.0"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Getting Started · express-validator"/><meta property="og:type" content="website"/><meta property="og:url" content="https://express-validator.github.io/index.html"/><meta property="og:description" content="express-validator is a set of [express.js](http://expressjs.com/) middlewares that wraps"/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/img/favicon.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/logo.svg" alt="express-validator"/><h2 class="headerTitleWithLogo">express-validator</h2></a><a href="/versions.html"><h3>6.9.0</h3></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive siteNavItemActive"><a href="/docs/index.html" target="_self">Docs</a></li><li class="siteNavGroupActive"><a href="/docs/check-api.html" target="_self">API</a></li><li class=""><a href="https://github.com/express-validator/express-validator" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Introduction</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Introduction</h3><ul class=""><li class="navListItem navListItemActive"><a class="navItem" href="/docs/index.html">Getting Started</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Features</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/sanitization.html">Sanitization</a></li><li class="navListItem"><a class="navItem" href="/docs/custom-validators-sanitizers.html">Custom validators/sanitizers</a></li><li class="navListItem"><a class="navItem" href="/docs/custom-error-messages.html">Custom Error Messages</a></li><li class="navListItem"><a class="navItem" href="/docs/wildcards.html">Wildcards</a></li><li class="navListItem"><a class="navItem" href="/docs/schema-validation.html">Schema Validation</a></li><li class="navListItem"><a class="navItem" href="/docs/whole-body-validation.html">Whole Body Validation</a></li><li class="navListItem"><a class="navItem" href="/docs/running-imperatively.html">Running validations imperatively</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">API</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/check-api.html">Validation middlewares</a></li><li class="navListItem"><a class="navItem" href="/docs/validation-chain-api.html">Validation Chain API</a></li><li class="navListItem"><a class="navItem" href="/docs/filter-api.html">Sanitization middlewares</a></li><li class="navListItem"><a class="navItem" href="/docs/sanitization-chain-api.html">Sanitization Chain API</a></li><li class="navListItem"><a class="navItem" href="/docs/matched-data-api.html">matchedData()</a></li><li class="navListItem"><a class="navItem" href="/docs/validation-result-api.html">validationResult()</a></li></ul></div></div></section></div><script>
             var coll = document.getElementsByClassName('collapsible');
             var checkActiveCategory = true;
             for (var i = 0; i < coll.length; i++) {
@@ -73,7 +73,7 @@ app.use(express.json());
 app.post(<span class="hljs-string">'/user'</span>, (req, res) =&gt; {
   User.create({
     <span class="hljs-attr">username</span>: req.body.username,
-    <span class="hljs-attr">password</span>: req.body.password
+    <span class="hljs-attr">password</span>: req.body.password,
   }).then(<span class="hljs-function"><span class="hljs-params">user</span> =&gt;</span> res.json(user));
 });
 </code></pre>
@@ -81,32 +81,36 @@ app.post(<span class="hljs-string">'/user'</span>, (req, res) =&gt; {
 <pre><code class="hljs css language-js"><span class="hljs-comment">// ...rest of the initial code omitted for simplicity.</span>
 <span class="hljs-keyword">const</span> { body, validationResult } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express-validator'</span>);
 
-app.post(<span class="hljs-string">'/user'</span>, [
+app.post(
+  <span class="hljs-string">'/user'</span>,
   <span class="hljs-comment">// username must be an email</span>
   body(<span class="hljs-string">'username'</span>).isEmail(),
   <span class="hljs-comment">// password must be at least 5 chars long</span>
-  body(<span class="hljs-string">'password'</span>).isLength({ <span class="hljs-attr">min</span>: <span class="hljs-number">5</span> })
-], (req, res) =&gt; {
-  <span class="hljs-comment">// Finds the validation errors in this request and wraps them in an object with handy functions</span>
-  <span class="hljs-keyword">const</span> errors = validationResult(req);
-  <span class="hljs-keyword">if</span> (!errors.isEmpty()) {
-    <span class="hljs-keyword">return</span> res.status(<span class="hljs-number">400</span>).json({ <span class="hljs-attr">errors</span>: errors.array() });
-  }
+  body(<span class="hljs-string">'password'</span>).isLength({ <span class="hljs-attr">min</span>: <span class="hljs-number">5</span> }),
+  (req, res) =&gt; {
+    <span class="hljs-comment">// Finds the validation errors in this request and wraps them in an object with handy functions</span>
+    <span class="hljs-keyword">const</span> errors = validationResult(req);
+    <span class="hljs-keyword">if</span> (!errors.isEmpty()) {
+      <span class="hljs-keyword">return</span> res.status(<span class="hljs-number">400</span>).json({ <span class="hljs-attr">errors</span>: errors.array() });
+    }
 
-  User.create({
-    <span class="hljs-attr">username</span>: req.body.username,
-    <span class="hljs-attr">password</span>: req.body.password
-  }).then(<span class="hljs-function"><span class="hljs-params">user</span> =&gt;</span> res.json(user));
-});
+    User.create({
+      <span class="hljs-attr">username</span>: req.body.username,
+      <span class="hljs-attr">password</span>: req.body.password,
+    }).then(<span class="hljs-function"><span class="hljs-params">user</span> =&gt;</span> res.json(user));
+  },
+);
 </code></pre>
 <p><em>Voila!</em> Now, whenever a request that includes invalid <code>username</code> or <code>password</code> fields
 is submitted, your server will respond like this:</p>
 <pre><code class="hljs css language-json">{
-  <span class="hljs-attr">"errors"</span>: [{
-    <span class="hljs-attr">"location"</span>: <span class="hljs-string">"body"</span>,
-    <span class="hljs-attr">"msg"</span>: <span class="hljs-string">"Invalid value"</span>,
-    <span class="hljs-attr">"param"</span>: <span class="hljs-string">"username"</span>
-  }]
+  <span class="hljs-attr">"errors"</span>: [
+    {
+      <span class="hljs-attr">"location"</span>: <span class="hljs-string">"body"</span>,
+      <span class="hljs-attr">"msg"</span>: <span class="hljs-string">"Invalid value"</span>,
+      <span class="hljs-attr">"param"</span>: <span class="hljs-string">"username"</span>
+    }
+  ]
 }
 </code></pre>
 <p>For all the available validators in express-validator (just like its options),

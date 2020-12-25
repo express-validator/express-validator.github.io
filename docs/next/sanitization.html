@@ -64,18 +64,15 @@ that can be used to take care of the data that comes in.</p>
 <span class="hljs-keyword">const</span> app = express();
 app.use(express.json());
 
-app.post(<span class="hljs-string">'/comment'</span>, [
-  body(<span class="hljs-string">'email'</span>)
-    .isEmail()
-    .normalizeEmail(),
-  body(<span class="hljs-string">'text'</span>)
-    .not().isEmpty()
-    .trim()
-    .escape(),
-  body(<span class="hljs-string">'notifyOnReply'</span>).toBoolean()
-], (req, res) =&gt; {
-  <span class="hljs-comment">// Handle the request somehow</span>
-});
+app.post(
+  <span class="hljs-string">'/comment'</span>,
+  body(<span class="hljs-string">'email'</span>).isEmail().normalizeEmail(),
+  body(<span class="hljs-string">'text'</span>).not().isEmpty().trim().escape(),
+  body(<span class="hljs-string">'notifyOnReply'</span>).toBoolean(),
+  (req, res) =&gt; {
+    <span class="hljs-comment">// Handle the request somehow</span>
+  },
+);
 </code></pre>
 <p>In the example above, we are validating <code>email</code> and <code>text</code> fields,
 so we may take advantage of the same chain to apply some sanitization,

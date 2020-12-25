@@ -65,18 +65,20 @@ and that the number of each address is sanitized as an integer.</p>
 <span class="hljs-keyword">const</span> app = express();
 app.use(express.json());
 
-app.post(<span class="hljs-string">'/addresses'</span>, [
+app.post(
+  <span class="hljs-string">'/addresses'</span>,
   check(<span class="hljs-string">'addresses.*.postalCode'</span>).isPostalCode(),
-  sanitize(<span class="hljs-string">'addresses.*.number'</span>).toInt()
-], (req, res) =&gt; {
-  <span class="hljs-comment">// Handle the request</span>
-});
+  sanitize(<span class="hljs-string">'addresses.*.number'</span>).toInt(),
+  (req, res) =&gt; {
+    <span class="hljs-comment">// Handle the request</span>
+  },
+);
 </code></pre>
 <p>This will handle cases where you send an array of addresses:</p>
 <pre><code class="hljs css language-json">{
   <span class="hljs-attr">"addresses"</span>: [
     { <span class="hljs-attr">"postalCode"</span>: <span class="hljs-string">"2010"</span>, <span class="hljs-attr">"number"</span>: <span class="hljs-string">"500"</span> },
-    { <span class="hljs-attr">"postalCode"</span>: <span class="hljs-string">""</span>, <span class="hljs-attr">"number"</span>: <span class="hljs-string">"501"</span> },
+    { <span class="hljs-attr">"postalCode"</span>: <span class="hljs-string">""</span>, <span class="hljs-attr">"number"</span>: <span class="hljs-string">"501"</span> }
   ]
 }
 </code></pre>
