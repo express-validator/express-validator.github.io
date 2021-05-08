@@ -161,6 +161,11 @@ This means the value of the fields may not be <code>undefined</code>; all other 
 Receives the value of the field being validated, as well as the express request, the location and the field path.</p>
 <p>If it returns truthy or a promise that resolves, the validation chain will continue
 running. If it returns falsy, a promise that rejects or if it throws, the validation chain will stop.</p></li>
+</ul>
+<blockquote>
+<p><em>Note:</em> async functions must return a resolved or rejected <code>Promise</code> because <code>truthy</code> or <code>falsy</code> values won't stop the chain (<a href="https://github.com/express-validator/express-validator/issues/1028#issuecomment-830561518">#1028</a>).</p>
+</blockquote>
+<ul>
 <li><p>A validation chain <a href="/docs/next/check-api.html#check-field-message">created through <code>check()</code> or similar functions</a>.</p>
 <p>If running that chain would produce errors, then the validation chain will stop.</p></li>
 </ul>
