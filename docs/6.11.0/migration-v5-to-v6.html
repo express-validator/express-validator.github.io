@@ -1,0 +1,166 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Migration from v5 to v6 · express-validator</title><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="generator" content="Docusaurus"/><meta name="description" content="Starting with v6, the approach for doing validations is more declarative and, in turn, some of the APIs we had in v5 require some changes."/><meta name="docsearch:version" content="6.11.0"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Migration from v5 to v6 · express-validator"/><meta property="og:type" content="website"/><meta property="og:url" content="https://express-validator.github.io/index.html"/><meta property="og:description" content="Starting with v6, the approach for doing validations is more declarative and, in turn, some of the APIs we had in v5 require some changes."/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/img/favicon.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/logo.svg" alt="express-validator"/><h2 class="headerTitleWithLogo">express-validator</h2></a><a href="/versions.html"><h3>6.11.0</h3></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/docs/6.11.0/index.html" target="_self">Docs</a></li><li class="siteNavGroupActive"><a href="/docs/6.11.0/check-api.html" target="_self">API</a></li><li class=""><a href="https://github.com/express-validator/express-validator" target="_self">GitHub</a></li><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>More</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Introduction</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/6.11.0/index.html">Getting Started</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Features</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/6.11.0/sanitization.html">Sanitization</a></li><li class="navListItem"><a class="navItem" href="/docs/6.11.0/custom-validators-sanitizers.html">Custom validators/sanitizers</a></li><li class="navListItem"><a class="navItem" href="/docs/6.11.0/custom-error-messages.html">Custom Error Messages</a></li><li class="navListItem"><a class="navItem" href="/docs/6.11.0/wildcards.html">Wildcards</a></li><li class="navListItem"><a class="navItem" href="/docs/6.11.0/schema-validation.html">Schema Validation</a></li><li class="navListItem"><a class="navItem" href="/docs/6.11.0/whole-body-validation.html">Whole Body Validation</a></li><li class="navListItem"><a class="navItem" href="/docs/6.11.0/running-imperatively.html">Running validations imperatively</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">API</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/6.11.0/check-api.html">Validation middlewares</a></li><li class="navListItem"><a class="navItem" href="/docs/6.11.0/validation-chain-api.html">Validation Chain API</a></li><li class="navListItem"><a class="navItem" href="/docs/6.11.0/filter-api.html">Sanitization middlewares</a></li><li class="navListItem"><a class="navItem" href="/docs/6.11.0/sanitization-chain-api.html">Sanitization Chain API</a></li><li class="navListItem"><a class="navItem" href="/docs/6.11.0/matched-data-api.html">matchedData()</a></li><li class="navListItem"><a class="navItem" href="/docs/6.11.0/validation-result-api.html">validationResult()</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">More</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/6.11.0/faq.html">FAQ</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/docs/6.11.0/migration-v5-to-v6.html">Migration from v5 to v6</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/express-validator/express-validator/edit/master/docs/migration-v5-to-v6.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 id="__docusaurus" class="postHeaderTitle">Migration from v5 to v6</h1></header><article><div><span><p>Starting with v6, the approach for doing validations is more declarative and, in turn, some of the APIs we had in v5 require some changes.</p>
+<p>The purpose of this documentation is to show how to migrate your existing express-validator code from v5 to v6 through sample codes. With the understanding that there is a more declarative way of doing the validations in v6+, the only requirement in the sample codes we set for is to keep the similar programmatical approach in both versions, so that we are comparing apples to apples.</p>
+<blockquote>
+<p><strong>For a complete list of breaking changes and new features in 6.0.0</strong>,
+please check <a href="https://github.com/express-validator/express-validator/releases/tag/v6.0.0">its release notes</a>.</p>
+</blockquote>
+<h2><a class="anchor" aria-hidden="true" id="sample-code-using-v531"></a><a href="#sample-code-using-v531" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Sample code using v5.3.1</h2>
+<p>Say we want to leverage this library in a more <em>programmatic</em> way: A POST request handler takes a JSON object in the request's body and responds based on if the <strong><em>greetings</em></strong> attribute is found in the JSON object.</p>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express'</span>);
+<span class="hljs-keyword">const</span> bodyParser = <span class="hljs-built_in">require</span>(<span class="hljs-string">'body-parser'</span>);
+<span class="hljs-keyword">const</span> expressValidator = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express-validator'</span>);
+
+<span class="hljs-keyword">const</span> app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ <span class="hljs-attr">extended</span>: <span class="hljs-literal">false</span> }));
+app.use(expressValidator());
+
+app.post(<span class="hljs-string">'/'</span>, (req, res) =&gt; {
+  <span class="hljs-built_in">console</span>.info(<span class="hljs-string">`checking request body: <span class="hljs-subst">${<span class="hljs-built_in">JSON</span>.stringify(req.body)}</span>`</span>);
+  req.checkBody(<span class="hljs-string">'greetings'</span>).isLength({ <span class="hljs-attr">min</span>: <span class="hljs-number">1</span> });
+
+  <span class="hljs-keyword">const</span> validationResults = req.validationErrors();
+  <span class="hljs-built_in">console</span>.info(<span class="hljs-string">`validation results: <span class="hljs-subst">${<span class="hljs-built_in">JSON</span>.stringify(validationResults)}</span>`</span>);
+
+  <span class="hljs-keyword">if</span> (!validationResults || validationResults.length &lt; <span class="hljs-number">1</span>) {
+    req.sanitizeBody(<span class="hljs-string">'greetings'</span>).escape().trim();
+    res.send(<span class="hljs-string">`checking done, hello: <span class="hljs-subst">${req.body[<span class="hljs-string">'greetings'</span>]}</span>`</span>);
+  } <span class="hljs-keyword">else</span> {
+    res.send(<span class="hljs-string">`checking done, error: <span class="hljs-subst">${<span class="hljs-built_in">JSON</span>.stringify(validationResults)}</span>`</span>);
+  }
+});
+
+app.listen(<span class="hljs-number">3000</span>, () =&gt; {
+  <span class="hljs-built_in">console</span>.info(<span class="hljs-string">'app listening at port 3000'</span>);
+});
+</code></pre>
+<p>For example, we want to make our v5 code to use the <a href="https://github.com/express-validator/express-validator/blob/master/docs/api-check.md"><code>check</code></a> and <a href="https://github.com/express-validator/express-validator/blob/master/docs/api-validation-result.md"><code>validationResult</code></a> functions in v6</p>
+<ol>
+<li>Change from
+<code>const expressValidator = require('express-validator')</code> to
+<code>const {check, validationResult} = require('express-validator')</code></li>
+<li>Remove <code>app.use(expressValidator())</code></li>
+<li>Change from
+<code>req.checkBody('greetings').isLength({min: 1})</code> to
+<code>await check('greetings').notEmpty().run(req)</code></li>
+<li>Change from
+<code>const validationResults = req.validationErrors()</code> to
+<code>const validationResults = validationResult(req)</code></li>
+<li>Change from
+<code>req.sanitizeBody('greetings').escape().trim()</code> to
+<code>await check('greetings').trim().escape().run(req)</code></li>
+</ol>
+<h2><a class="anchor" aria-hidden="true" id="sample-code-using-v6"></a><a href="#sample-code-using-v6" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Sample code using v6+</h2>
+<pre><code class="hljs css language-js"><span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express'</span>);
+<span class="hljs-keyword">const</span> bodyParser = <span class="hljs-built_in">require</span>(<span class="hljs-string">'body-parser'</span>);
+<span class="hljs-keyword">const</span> { check, validationResult } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express-validator'</span>);
+
+<span class="hljs-keyword">const</span> app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ <span class="hljs-attr">extended</span>: <span class="hljs-literal">false</span> }));
+
+app.post(<span class="hljs-string">'/'</span>, <span class="hljs-keyword">async</span> (req, res) =&gt; {
+  <span class="hljs-built_in">console</span>.info(<span class="hljs-string">`checking request body: <span class="hljs-subst">${<span class="hljs-built_in">JSON</span>.stringify(req.body)}</span>`</span>);
+  <span class="hljs-keyword">await</span> check(<span class="hljs-string">'greetings'</span>).notEmpty().run(req);
+
+  <span class="hljs-keyword">const</span> validationResults = validationResult(req);
+  <span class="hljs-built_in">console</span>.info(
+    <span class="hljs-string">`validation results: <span class="hljs-subst">${<span class="hljs-built_in">JSON</span>.stringify(
+      validationResults,
+    )}</span>, is empty? <span class="hljs-subst">${validationResults.isEmpty()}</span>`</span>,
+  );
+
+  <span class="hljs-keyword">if</span> (validationResults.isEmpty()) {
+    <span class="hljs-keyword">await</span> check(<span class="hljs-string">'greetings'</span>).trim().escape().run(req);
+    res.send(<span class="hljs-string">`checking done, hello: <span class="hljs-subst">${req.body[<span class="hljs-string">'greetings'</span>]}</span>`</span>);
+  } <span class="hljs-keyword">else</span> {
+    res.send(<span class="hljs-string">`checking done, error: <span class="hljs-subst">${<span class="hljs-built_in">JSON</span>.stringify(validationResults.array())}</span>`</span>);
+  }
+});
+
+app.listen(<span class="hljs-number">3000</span>, () =&gt; {
+  <span class="hljs-built_in">console</span>.info(<span class="hljs-string">'app listening at port 3000'</span>);
+});
+</code></pre>
+<blockquote>
+<p>The complete diff between the two versions of the example: <a href="https://github.com/shwei/express-validator-migrate-5-to-6/blob/main/v5_to_v6.diff">https://github.com/shwei/express-validator-migrate-5-to-6/blob/main/v5_to_v6.diff</a></p>
+</blockquote>
+<blockquote>
+<p>To see the sample codes in action I created the project <a href="https://github.com/shwei/express-validator-migrate-5-to-6">express-validator-migrate-5-to-6</a>.</p>
+</blockquote>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/6.11.0/faq.html"><span class="arrow-prev">← </span><span>FAQ</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#sample-code-using-v531">Sample code using v5.3.1</a></li><li><a href="#sample-code-using-v6">Sample code using v6+</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"><img src="/img/logo.svg" alt="express-validator" width="66" height="58"/></a><div><h5>Docs</h5><a href="/docs/index.html">Getting Started</a><a href="/docs/check-api.html">API Reference</a></div><div><h5>Community</h5><a href="http://stackoverflow.com/questions/tagged/express-validator" target="_blank" rel="noreferrer noopener">Stack Overflow</a></div><div><h5>More</h5><a href="https://github.com/express-validator/express-validator">GitHub</a><a class="github-button" href="https://github.com/express-validator/express-validator" data-icon="octicon-star" data-count-href="/express-validator/express-validator/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><section class="copyright">Copyright © 2021 express-validator</section></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
+                document.addEventListener('keyup', function(e) {
+                  if (e.target !== document.body) {
+                    return;
+                  }
+                  // keyCode for '/' (slash)
+                  if (e.keyCode === 191) {
+                    const search = document.getElementById('search_input_react');
+                    search && search.focus();
+                  }
+                });
+              </script><script>
+              var search = docsearch({
+                
+                apiKey: 'd6d85148b3b81778cf952442d4292bea',
+                indexName: 'express-validator',
+                inputSelector: '#search_input_react',
+                algoliaOptions: {"facetFilters":["type:lvl3","language:en","version:6.11.0"]}
+              });
+            </script></body></html>
