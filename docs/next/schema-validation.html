@@ -116,11 +116,21 @@ app.put(
         <span class="hljs-attr">bail</span>: <span class="hljs-literal">true</span>,
       },
     },
+    <span class="hljs-comment">// Support if functionality in schemas</span>
+    <span class="hljs-attr">someField</span>: {
+      <span class="hljs-attr">isInt</span>: {
+        <span class="hljs-attr">if</span>: <span class="hljs-function"><span class="hljs-params">value</span> =&gt;</span> {
+          <span class="hljs-keyword">return</span> value !== <span class="hljs-string">''</span>;
+        },
+      },
+    },
     <span class="hljs-comment">// Wildcards/dots for nested fields work as well</span>
     <span class="hljs-string">'addresses.*.postalCode'</span>: {
       <span class="hljs-comment">// Make this field optional when undefined or null</span>
       <span class="hljs-attr">optional</span>: { <span class="hljs-attr">options</span>: { <span class="hljs-attr">nullable</span>: <span class="hljs-literal">true</span> } },
-      <span class="hljs-attr">isPostalCode</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">isPostalCode</span>: {
+        <span class="hljs-attr">options</span>: <span class="hljs-string">'US'</span>, <span class="hljs-comment">// set postalCode locale here</span>
+      },
     },
   }),
   (req, res, next) =&gt; {
