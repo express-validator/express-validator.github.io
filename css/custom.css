@@ -76,3 +76,18 @@
 .navbar-search button:hover {
   background-color: var(--docsearch-searchbox-focus-background);
 }
+
+th {
+  text-align: left;
+}
+
+th,
+td {
+  /* Ensures that non-last column in tables don't get wrapped on every space due to the below rule */
+  white-space: nowrap;
+}
+
+td:last-child {
+  /* Make the last column in tables always use up the remaining space */
+  width: 100%;
+}
