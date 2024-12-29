@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk=self.webpackChunk||[]).push([[1796],{7477:(e,r,s)=>{s.r(r),s.d(r,{default:()=>d});s(63696);var t=s(49519),c=s(62540);function d(){return(0,c.jsxs)(c.Fragment,{children:[(0,c.jsx)(t.rd,{to:"docs"}),(0,c.jsxs)("div",{children:["If you are not redirected automatically, follow this ",(0,c.jsx)("a",{href:"docs/",children:"link"}),"."]})]})}}}]);
